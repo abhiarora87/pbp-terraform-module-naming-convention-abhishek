@@ -7,14 +7,16 @@ Terraform Module Exercise Solution by Abhishek Arora
 This module creates dynamically provides the resource name with the following naming convention 
 - This modules should create a naming convention for AWS resources such as `pbp-{domain}-{service_name}-{environment}`
     -`pbp` - Required: Is a fixed value that must be at the start. This is to indicate that the resource was deployed by PayByPhone.
-    - `{domain}` - Required: Must be from one of the following accepted values from the list of domains (reporting|data|platform|fron
+    -`{domain}` - Required: Must be from one of the following accepted values from the list of domains (reporting|data|platform|fron
 tend|backend)
     -`{service_name}` - Optional: Alphanumeric and with no spaces; when service name is not provided, a random string (length 8) is
 created
     -`{environment}` - Optional: Must be from one of the following accepted values development and production
 
 - by default lower case and can accept any user case
-- total character count should limit to 50 
+
+- This module will only create the name if the total character count is less than or equal to 50 . If greater than 50 it will provide a null value and output of `total_character_exceed_flag` to `true` if needs to be consumed somewhere in the child module
+
 - Exposed the module output as the resource name
 
 - Allow reordering of {domain}, {environment}, {service_name} using a `bool` variable `reordering_flag`. Default set to `false`. If set to `true` it accepts the input from the consumer for 1st , 2nd and 3rd order of the naming convention.
@@ -29,4 +31,22 @@ pbp-{service_name}-{domain}-{environment}
 
 ### Module Usage
 
-- In order to consumer this 
+- This module can be consumed by the following example
+
+```
+module "naming_convention"{
+    source = "git@github.com:abhiarora87/pbp-terraform-module-naming-convention-abhishek.git"
+    domain = "reporting"
+    environment = "development"
+}
+
+resource "aws_s3_bucket" "example" {
+  bucket = "example"
+}
+
+resource "aws_athena_database" "example" {
+  name   = module.naming_convention.name
+  bucket = aws_s3_bucket.example.id
+}
+
+```
