@@ -53,7 +53,7 @@ variable "reordering" {
 
   }
 
-  description = "If the variable reordering_flag flag is set to true"
+  description = "Accepting input the reordering sequence if `reordering_flag` is true"
 
   validation {
     condition     = contains(["domain", "service_name", "environment"], var.reordering.first_order) && var.reordering_flag
