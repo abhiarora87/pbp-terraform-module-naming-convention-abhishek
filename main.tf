@@ -8,7 +8,7 @@ locals {
 
   service_name_value = var.service_name == "" ? random_string.random.result : trimspace(var.service_name)
 
-  ordered_resource_name = join(var.delimiter, ["pbp", lookup(local.lookup_value, var.reordering_1st_order, ""), lookup(local.lookup_value, var.reordering_2nd_order, ""), lookup(local.lookup_value, var.reordering_3rd_order, "")])
+  ordered_resource_name = join(var.delimiter, ["pbp", lookup(local.lookup_value, var.reordering.first_order, ""), lookup(local.lookup_value, var.reordering.second_order, ""), lookup(local.lookup_value, var.reordering.third_order, "")])
 
   aws_resource_name = var.reordering_flag ? local.ordered_resource_name : join(var.delimiter, ["pbp", var.domain, local.service_name_value, var.environment])
 

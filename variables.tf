@@ -37,35 +37,36 @@ variable "reordering_flag" {
   description = "If set to true gives the user ability to rearrange the order of naming convention"
   default     = false
 }
-variable "reordering_1st_order" {
-  type        = string
-  description = "If the variable reordering_flag flag is set to true then the 1st order value "
-  default     = ""
+
+variable "reordering" {
+  type = object({
+    first_order  = string
+    second_order = string
+    third_order  = string
+
+  })
+
+  default = {
+    first_order  = ""
+    second_order = ""
+    third_order  = ""
+
+  }
+
+  description = "If the variable reordering_flag flag is set to true"
 
   validation {
-    condition     = contains(["domain", "service_name", "environment"], var.reordering_1st_order) && var.reordering_flag
+    condition     = contains(["domain", "service_name", "environment"], var.reordering.first_order) && var.reordering_flag
     error_message = "The only accepted values are domain | service_name | environment and reordering_flag should be set to true . Kindly retry"
   }
-}
-
-variable "reordering_2nd_order" {
-  type        = string
-  description = "If the variable reordering_flag flag is set to true then the 2nd order value "
-  default     = ""
 
   validation {
-    condition     = contains(["domain", "service_name", "environment"], var.reordering_2nd_order) && var.reordering_flag
+    condition     = contains(["domain", "service_name", "environment"], var.reordering.second_order) && var.reordering_flag
     error_message = "The only accepted values are domain | service_name | environment and reordering_flag should be set to true . Kindly retry"
   }
-}
-
-variable "reordering_3rd_order" {
-  type        = string
-  description = "If the variable reordering_flag flag is set to true then the 3rd order value "
-  default     = ""
 
   validation {
-    condition     = contains(["domain", "service_name", "environment"], var.reordering_3rd_order) && var.reordering_flag
+    condition     = contains(["domain", "service_name", "environment"], var.reordering.third_order) && var.reordering_flag
     error_message = "The only accepted values are domain | service_name | environment and reordering_flag should be set to true . Kindly retry"
   }
 }

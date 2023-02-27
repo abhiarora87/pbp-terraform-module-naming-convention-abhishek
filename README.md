@@ -59,9 +59,11 @@ module "naming_convention"{
     domain = "reporting"
     environment = "development"
     reordering_flag = true
-    reordering_1st_order = "service_name"
-    reordering_2nd_order = "domain"
-    reordering_3rd_order = "environment"
+    reordering = {
+      first_order  = "service_name"
+      second_order = "domain"
+      third_order  = "environment"
+    }
 }
 
 resource "aws_s3_bucket" "example" {
