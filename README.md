@@ -31,8 +31,9 @@ pbp-{service_name}-{domain}-{environment}
 
 ### Module Usage
 
-- This module can be consumed by the following example
+- This module can be consumed by the following example to create a athena database
 
+#### Example 1
 ```
 module "naming_convention"{
     source = "git@github.com:abhiarora87/pbp-terraform-module-naming-convention-abhishek.git"
@@ -46,6 +47,29 @@ resource "aws_s3_bucket" "example" {
 
 resource "aws_athena_database" "example" {
   name   = module.naming_convention.name
+  bucket = aws_s3_bucket.example.id
+}
+
+```
+
+#### Example 2
+```
+module "naming_convention"{
+    source = "git@github.com:abhiarora87/pbp-terraform-module-naming-convention-abhishek.git"
+    domain = "reporting"
+    environment = "development"
+    reordering_flag = true
+    reordering_1st_order = "service_name"
+    reordering_2nd_order = "domain"
+    reordering_3rd_order = "environment"
+}
+
+resource "aws_s3_bucket" "example" {
+  bucket = "example"
+}
+
+resource "aws_athena_database" "example" {
+  name   = module.naming_convention.name_upper
   bucket = aws_s3_bucket.example.id
 }
 
