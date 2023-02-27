@@ -6,12 +6,12 @@ Terraform Module Exercise Solution by Abhishek Arora
 ### Modules Features
 This module creates dynamically provides the resource name with the following naming convention 
 - This modules should create a naming convention for AWS resources such as `pbp-{domain}-{service_name}-{environment}`
->`pbp` - Required: Is a fixed value that must be at the start. This is to indicate that the resource was deployed by PayByPhone.
-> `{domain}` - Required: Must be from one of the following accepted values from the list of domains (reporting|data|platform|fron
+    -`pbp` - Required: Is a fixed value that must be at the start. This is to indicate that the resource was deployed by PayByPhone.
+    - `{domain}` - Required: Must be from one of the following accepted values from the list of domains (reporting|data|platform|fron
 tend|backend)
-> `{service_name}` - Optional: Alphanumeric and with no spaces; when service name is not provided, a random string (length 8) is
+    -`{service_name}` - Optional: Alphanumeric and with no spaces; when service name is not provided, a random string (length 8) is
 created
-> `{environment}` - Optional: Must be from one of the following accepted values development and production
+    -`{environment}` - Optional: Must be from one of the following accepted values development and production
 
 - by default lower case and can accept any user case
 - total character count should limit to 50 
@@ -23,3 +23,10 @@ created
 pbp-{service_name}-{domain}-{environment}
 ```
 
+- Allow for any delimiter. The default is “-” when none is specified . If another delimiter the consumer can provide in `var.delimiter`
+
+- Allow additional case output: default lower, additional case Title and UPPER by exposing name outputs with lower, title and upper case.
+
+### Module Usage
+
+- In order to consumer this 
